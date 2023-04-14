@@ -3,9 +3,21 @@ import { Service } from 'typedi';
 import { HttpException } from '@exceptions/httpException';
 import { User } from '@interfaces/users.interface';
 import { UserModel } from '@models/users.model';
+import puppeteer, { Browser } from 'puppeteer';
 
 @Service()
-export class UserService {
+export class ExampleService {
+
+  public async lauchPuppeteer(): Promise<Browser> {
+    
+  const browser = await puppeteer.launch({
+    headless: false,
+    args: ["--window-size=1400,1080"],
+  });
+    return browser ;
+  }
+
+
   public async findAllUser(): Promise<User[]> {
     const users: User[] = UserModel;
     return users;

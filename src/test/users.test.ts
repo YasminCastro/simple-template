@@ -2,14 +2,14 @@ import request from 'supertest';
 import { App } from '@/app';
 import { User } from '@interfaces/users.interface';
 import { UserModel } from '@models/users.model';
-import { UserRoute } from '@routes/users.route';
+import { ExampleRoute } from '@/routes/example.route';
 
 afterAll(async () => {
   await new Promise<void>(resolve => setTimeout(() => resolve(), 500));
 });
 
 describe('TEST Users API', () => {
-  const route = new UserRoute();
+  const route = new ExampleRoute();
   const app = new App([route]);
 
   describe('[GET] /users', () => {
