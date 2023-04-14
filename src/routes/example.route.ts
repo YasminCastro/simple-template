@@ -14,7 +14,7 @@ export class ExampleRoute implements Routes {
   }
 
   private initializeRoutes() {
-    this.router.get(`${this.path}`, this.example.goToGoogle);
+    this.router.get(`${this.path}`, this.example.searchGoogle);
     this.router.get(`${this.path}/:id(\\d+)`, this.example.getUserById);
     this.router.post(`${this.path}`, ValidationMiddleware(CreateUserDto), this.example.createUser);
     this.router.put(`${this.path}/:id(\\d+)`, ValidationMiddleware(UpdateUserDto), this.example.updateUser);

@@ -3,20 +3,38 @@ import { Service } from 'typedi';
 import { HttpException } from '@exceptions/httpException';
 import { User } from '@interfaces/users.interface';
 import { UserModel } from '@models/users.model';
-import puppeteer, { Browser } from 'puppeteer';
+import puppeteer, { Page } from 'puppeteer';
 
 @Service()
 export class ExampleService {
+  public async lauchPuppeteer(): Promise<Page> {
+    const browser = await puppeteer.launch({
+      headless: false,
+      args: ['--window-size=1400,1080'],
+    });
 
-  public async lauchPuppeteer(): Promise<Browser> {
-    
-  const browser = await puppeteer.launch({
-    headless: false,
-    args: ["--window-size=1400,1080"],
-  });
-    return browser ;
+    let page = (await browser.pages())[0];
+    await page.setViewport({ width: 1400, height: 1080 });
+    return page;
   }
 
+  public async searchGoogle(page: Page): Promise<Page> {
+    console.log('Abrindo página https://www.google.com');
+    await page.goto('https://www.google.com', {
+      waitUntil: 'networkidle0',
+    });
+
+    //query do navegador
+    //document.querySelector("textarea[type='search']")
+
+    const TEXT_AREA = "textarea[type='search']']";
+
+    console.log(`Digitando...`);
+    await page.waitForSelector(TEXT_AREA);
+    await page.type(TEXT_AREA, 'github');
+
+    return page;
+  }
 
   public async findAllUser(): Promise<User[]> {
     const users: User[] = UserModel;

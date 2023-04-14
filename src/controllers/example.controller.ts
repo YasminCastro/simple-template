@@ -6,9 +6,10 @@ import { ExampleService } from '@/services/example.service';
 export class ExampleController {
   public example = Container.get(ExampleService);
 
-  public goToGoogle = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  public searchGoogle = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const findAllUsersData: User[] = await this.example.findAllUser();
+      const page = await this.example.lauchPuppeteer();
+      const page2 = await this.example.searchGoogle(page);
 
       res.status(200).json({});
     } catch (error) {
