@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { ExampleController } from '@/controllers/example.controller';
-import { CreateUserDto, UpdateUserDto } from '@dtos/users.dto';
+import { SearchDto } from '@/dtos/example.dto';
 import { Routes } from '@interfaces/routes.interface';
 import { ValidationMiddleware } from '@middlewares/validation.middleware';
 
@@ -14,10 +14,7 @@ export class ExampleRoute implements Routes {
   }
 
   private initializeRoutes() {
-    this.router.get(`${this.path}`, this.example.searchGoogle);
-    this.router.get(`${this.path}/:id(\\d+)`, this.example.getUserById);
-    this.router.post(`${this.path}`, ValidationMiddleware(CreateUserDto), this.example.createUser);
-    this.router.put(`${this.path}/:id(\\d+)`, ValidationMiddleware(UpdateUserDto), this.example.updateUser);
-    this.router.delete(`${this.path}/:id(\\d+)`, this.example.deleteUser);
+    this.router.get(`${this.path}google`, this.example.searchGithubOnGoogle);
+    this.router.post(`${this.path}`, ValidationMiddleware(SearchDto), this.example.searchOnGoogle);
   }
 }
